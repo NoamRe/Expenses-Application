@@ -1,0 +1,227 @@
+package com.example.prog.expenseapp;
+
+import android.os.AsyncTask;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class OnlineStuff extends AsyncTask<String, Integer, String> {
+    private Spinner spinner;
+    private ArrayAdapter arrayAdapter;
+    private ArrayList<String> arrayList;
+    private URL url;
+    private HttpURLConnection connection;
+    private BufferedReader input;
+    private InputStreamReader dataInputStream;
+    private String content;
+
+    public OnlineStuff(URL url, Spinner spinner, ArrayList<String> arrayList, ArrayAdapter arrayAdapter) {
+        this.url = url;
+        this.spinner = spinner;
+        this.arrayAdapter = arrayAdapter;
+        this.arrayList = arrayList;
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            dataInputStream = new InputStreamReader(connection.getInputStream());
+            input = new BufferedReader(dataInputStream);
+            content = input.readLine();
+            input.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Gson gson = new Gson();
+        Response response = gson.fromJson(s, Response.class);
+        HashMap<String, Double> hashMap = new HashMap<String, Double>();
+        hashMap.put("AED", response.getRates().getAED());
+        hashMap.put("AFN", response.getRates().getAFN());
+        hashMap.put("ALL", response.getRates().getALL());
+        hashMap.put("AMD", response.getRates().getAMD());
+        hashMap.put("ANG", response.getRates().getANG());
+        hashMap.put("AOA", response.getRates().getAOA());
+        hashMap.put("ARS", response.getRates().getARS());
+        hashMap.put("AUD", response.getRates().getAUD());
+        hashMap.put("AWG", response.getRates().getAWG());
+        hashMap.put("AZN", response.getRates().getAZN());
+        hashMap.put("BAM", response.getRates().getBAM());
+        hashMap.put("BBD", response.getRates().getBBD());
+        hashMap.put("BDT", response.getRates().getBDT());
+        hashMap.put("BGN", response.getRates().getBGN());
+        hashMap.put("BHD", response.getRates().getBHD());
+        hashMap.put("BIF", response.getRates().getBIF());
+        hashMap.put("BMD", response.getRates().getBMD());
+        hashMap.put("BND", response.getRates().getBND());
+        hashMap.put("BOB", response.getRates().getBOB());
+        hashMap.put("BRL", response.getRates().getBRL());
+        hashMap.put("BSD", response.getRates().getBSD());
+        hashMap.put("BTC", response.getRates().getBTC());
+        hashMap.put("BTN", response.getRates().getBTN());
+        hashMap.put("BWP", response.getRates().getBWP());
+        hashMap.put("BYN", response.getRates().getBYN());
+        hashMap.put("BYR", response.getRates().getBYR());
+        hashMap.put("BZD", response.getRates().getBZD());
+        hashMap.put("CAD", response.getRates().getCAD());
+        hashMap.put("CDF", response.getRates().getCDF());
+        hashMap.put("CHF", response.getRates().getCHF());
+        hashMap.put("CLF", response.getRates().getCLF());
+        hashMap.put("CLP", response.getRates().getCLP());
+        hashMap.put("CNY", response.getRates().getCNY());
+        hashMap.put("COP", response.getRates().getCOP());
+        hashMap.put("CRC", response.getRates().getCRC());
+        hashMap.put("CUC", response.getRates().getCUC());
+        hashMap.put("CUP", response.getRates().getCUP());
+        hashMap.put("CVE", response.getRates().getCVE());
+        hashMap.put("CZK", response.getRates().getCZK());
+        hashMap.put("DJF", response.getRates().getDJF());
+        hashMap.put("DKK", response.getRates().getDKK());
+        hashMap.put("DOP", response.getRates().getDOP());
+        hashMap.put("DZD", response.getRates().getDZD());
+        hashMap.put("EGP", response.getRates().getEGP());
+        hashMap.put("ERN", response.getRates().getERN());
+        hashMap.put("ETB", response.getRates().getETB());
+        hashMap.put("EUR", response.getRates().getEUR());
+        hashMap.put("FJD", response.getRates().getFJD());
+        hashMap.put("FKP", response.getRates().getFKP());
+        hashMap.put("GBP", response.getRates().getGBP());
+        hashMap.put("GEL", response.getRates().getGEL());
+        hashMap.put("GGP", response.getRates().getGGP());
+        hashMap.put("GHS", response.getRates().getGHS());
+        hashMap.put("GIP", response.getRates().getGIP());
+        hashMap.put("GMD", response.getRates().getGMD());
+        hashMap.put("GNF", response.getRates().getGNF());
+        hashMap.put("GTQ", response.getRates().getGTQ());
+        hashMap.put("GYD", response.getRates().getGYD());
+        hashMap.put("HKD", response.getRates().getHKD());
+        hashMap.put("HNL", response.getRates().getHNL());
+        hashMap.put("HRK", response.getRates().getHRK());
+        hashMap.put("HTG", response.getRates().getHTG());
+        hashMap.put("HUF", response.getRates().getHUF());
+        hashMap.put("IDR", response.getRates().getIDR());
+        hashMap.put("ILS", response.getRates().getILS());
+        hashMap.put("IMP", response.getRates().getIMP());
+        hashMap.put("INR", response.getRates().getINR());
+        hashMap.put("IQD", response.getRates().getIQD());
+        hashMap.put("IRR", response.getRates().getIRR());
+        hashMap.put("ISK", response.getRates().getISK());
+        hashMap.put("JEP", response.getRates().getJEP());
+        hashMap.put("JMD", response.getRates().getJMD());
+        hashMap.put("JOD", response.getRates().getJOD());
+        hashMap.put("JPY", response.getRates().getJPY());
+        hashMap.put("KES", response.getRates().getKES());
+        hashMap.put("KGS", response.getRates().getKGS());
+        hashMap.put("KHR", response.getRates().getKHR());
+        hashMap.put("KMF", response.getRates().getKMF());
+        hashMap.put("KPW", response.getRates().getKPW());
+        hashMap.put("KRW", response.getRates().getKRW());
+        hashMap.put("KWD", response.getRates().getKWD());
+        hashMap.put("KYD", response.getRates().getKYD());
+        hashMap.put("KZT", response.getRates().getKZT());
+        hashMap.put("LAK", response.getRates().getLAK());
+        hashMap.put("LBP", response.getRates().getLBP());
+        hashMap.put("LKR", response.getRates().getLKR());
+        hashMap.put("LRD", response.getRates().getLRD());
+        hashMap.put("LSL", response.getRates().getLSL());
+        hashMap.put("LTL", response.getRates().getLTL());
+        hashMap.put("LVL", response.getRates().getLVL());
+        hashMap.put("LYD", response.getRates().getLYD());
+        hashMap.put("MAD", response.getRates().getMAD());
+        hashMap.put("MDL", response.getRates().getMDL());
+        hashMap.put("MGA", response.getRates().getMGA());
+        hashMap.put("MKD", response.getRates().getMKD());
+        hashMap.put("MMK", response.getRates().getMMK());
+        hashMap.put("MNT", response.getRates().getMNT());
+        hashMap.put("MOP", response.getRates().getMOP());
+        hashMap.put("MRO", response.getRates().getMRO());
+        hashMap.put("MUR", response.getRates().getMUR());
+        hashMap.put("MVR", response.getRates().getMVR());
+        hashMap.put("MWK", response.getRates().getMWK());
+        hashMap.put("MXN", response.getRates().getMXN());
+        hashMap.put("MYR", response.getRates().getMYR());
+        hashMap.put("MZN", response.getRates().getMZN());
+        hashMap.put("NAD", response.getRates().getNAD());
+        hashMap.put("NGN", response.getRates().getNGN());
+        hashMap.put("NIO", response.getRates().getNIO());
+        hashMap.put("NOK", response.getRates().getNOK());
+        hashMap.put("NPR", response.getRates().getNPR());
+        hashMap.put("NZD", response.getRates().getNZD());
+        hashMap.put("OMR", response.getRates().getOMR());
+        hashMap.put("PAB", response.getRates().getPAB());
+        hashMap.put("PEN", response.getRates().getPEN());
+        hashMap.put("PGK", response.getRates().getPGK());
+        hashMap.put("PHP", response.getRates().getPHP());
+        hashMap.put("PKR", response.getRates().getPKR());
+        hashMap.put("PLN", response.getRates().getPLN());
+        hashMap.put("PYG", response.getRates().getPYG());
+        hashMap.put("QAR", response.getRates().getQAR());
+        hashMap.put("RON", response.getRates().getRON());
+        hashMap.put("RSD", response.getRates().getRSD());
+        hashMap.put("RUB", response.getRates().getRUB());
+        hashMap.put("RWF", response.getRates().getRWF());
+        hashMap.put("SAR", response.getRates().getSAR());
+        hashMap.put("SBD", response.getRates().getSBD());
+        hashMap.put("SCR", response.getRates().getSCR());
+        hashMap.put("SDG", response.getRates().getSDG());
+        hashMap.put("SEK", response.getRates().getSEK());
+        hashMap.put("SGD", response.getRates().getSGD());
+        hashMap.put("SHP", response.getRates().getSHP());
+        hashMap.put("SLL", response.getRates().getSLL());
+        hashMap.put("SOS", response.getRates().getSOS());
+        hashMap.put("SRD", response.getRates().getSRD());
+        hashMap.put("STD", response.getRates().getSTD());
+        hashMap.put("SVC", response.getRates().getSVC());
+        hashMap.put("SYP", response.getRates().getSYP());
+        hashMap.put("SZL", response.getRates().getSZL());
+        hashMap.put("THB", response.getRates().getTHB());
+        hashMap.put("TJS", response.getRates().getTJS());
+        hashMap.put("TMT", response.getRates().getTMT());
+        hashMap.put("TND", response.getRates().getTND());
+        hashMap.put("TOP", response.getRates().getTOP());
+        hashMap.put("TRY", response.getRates().getTRY());
+        hashMap.put("TTD", response.getRates().getTTD());
+        hashMap.put("TWD", response.getRates().getTWD());
+        hashMap.put("TZS", response.getRates().getTZS());
+        hashMap.put("UAH", response.getRates().getUAH());
+        hashMap.put("UGX", response.getRates().getUGX());
+        hashMap.put("USD", response.getRates().getUSD());
+        hashMap.put("UYU", response.getRates().getUYU());
+        hashMap.put("UZS", response.getRates().getUZS());
+        hashMap.put("VEF", response.getRates().getVEF());
+        hashMap.put("VND", response.getRates().getVND());
+        hashMap.put("VUV", response.getRates().getVUV());
+        hashMap.put("WST", response.getRates().getWST());
+        hashMap.put("XAF", response.getRates().getXAF());
+        hashMap.put("XAG", response.getRates().getXAG());
+        hashMap.put("XAU", response.getRates().getXAU());
+        hashMap.put("XCD", response.getRates().getXCD());
+        hashMap.put("XDR", response.getRates().getXDR());
+        hashMap.put("XOF", response.getRates().getXOF());
+        hashMap.put("XPF", response.getRates().getXPF());
+        hashMap.put("YER", response.getRates().getYER());
+        hashMap.put("ZAR", response.getRates().getZAR());
+        hashMap.put("ZMK", response.getRates().getZMK());
+        hashMap.put("ZMW", response.getRates().getZMW());
+        hashMap.put("ZWL", response.getRates().getZWL());
+        arrayList.addAll(hashMap.keySet());
+        arrayAdapter.notifyDataSetChanged();
+        spinner.setAdapter(arrayAdapter);
+
+    }
+}
